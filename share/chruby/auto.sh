@@ -30,16 +30,15 @@ function chruby_auto() {
 }
 
 if [[ -n "$ZSH_VERSION" ]]; then
-  # Execute once at start of shell.
-  # TODO: move outside conditional; same for bash (I think)
-  chruby_auto
 	if [[ ! "$chpwd_functions" == *chruby_auto* ]]; then
 		chpwd_functions+=("chruby_auto")
 	fi
 elif [[ -n "$BASH_VERSION" ]]; then
-  chruby_auto
 	trap '[[ "$BASH_COMMAND" != "$PROMPT_COMMAND" ]] && chruby_auto' DEBUG
 fi
+
+# Execute once at start of shell.
+chruby_auto
 
 # See if there's some way to run this AFTER every command in bash
 # http://unix.stackexchange.com/questions/171764/how-can-i-run-a-command-in-bash-after-any-change-in-pwd
